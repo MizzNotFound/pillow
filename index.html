@@ -2206,12 +2206,41 @@
             scene.add(pillowGroup);
 
             const loader = new THREE.GLTFLoader();
-            // Custom Texture (Lavender Pattern)
-            const customTexture = new THREE.TextureLoader().load('images/pillow_texture_lavender.jpg?v=2');
-            customTexture.flipY = false;
-            customTexture.wrapS = THREE.RepeatWrapping;
-            customTexture.wrapT = THREE.RepeatWrapping;
-            customTexture.repeat.set(2, 2); // Tile the texture for better resolution
+            // Custom Texture Logic: Pattern + Skin Tone Color
+            function createTintedTexture(url, color) {
+                const texture = new THREE.Texture();
+                const image = new Image();
+                image.src = url;
+                image.crossOrigin = "Anonymous";
+                image.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(image, 0, 0);
+
+                    // 1. Desaturate to get grayscale pattern
+                    ctx.globalCompositeOperation = 'saturation';
+                    ctx.fillStyle = 'hsl(0,0%,50%)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    // 2. Tint with Skin Tone (Beige/Nude)
+                    ctx.globalCompositeOperation = 'multiply';
+                    ctx.fillStyle = color;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    texture.image = canvas;
+                    texture.needsUpdate = true;
+                    texture.wrapS = THREE.RepeatWrapping;
+                    texture.wrapT = THREE.RepeatWrapping;
+                    texture.repeat.set(2, 2);
+                    texture.flipY = false;
+                };
+                return texture;
+            }
+
+            // Load Skin Tone Texture (#ebd6c4 is a soft beige)
+            const customTexture = createTintedTexture('images/pillow_texture_lavender.jpg?v=2', '#ebd6c4');
 
             loader.load('pillow.glb', (gltf) => {
                 pillow = gltf.scene;
