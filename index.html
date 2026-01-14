@@ -1152,6 +1152,79 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Materials Section */
+        .materials-section {
+            padding: 80px 5%;
+            background: linear-gradient(180deg, #1a1510 0%, var(--bg-primary) 100%);
+            text-align: center;
+        }
+
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .material-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(196, 167, 125, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .material-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .material-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .material-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .material-icon {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            display: inline-block;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .material-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .material-card p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
     </style>
 </head>
 
@@ -1256,7 +1329,7 @@
                     </div>
                 </div>
                 <div class="carousel-slide-lg" data-step="3">
-                    <img src="images/journey_sketch_pillow_tech_1768380647424.png" alt="Pillow Tech">
+                    <img src="images/pillow_schematic.png" alt="Pillow Tech">
                     <div class="slide-info">
                         <h3>💆 Sử Dụng DreamPillow</h3>
                         <p>Công nghệ massage đa điểm và nhiệt hồng ngoại giúp thư giãn cơ bắp.</p>
@@ -1287,6 +1360,42 @@
             <span class="dot-lg" onclick="goToJourneySlide(3)">3</span>
             <span class="dot-lg" onclick="goToJourneySlide(4)">4</span>
             <span class="dot-lg" onclick="goToJourneySlide(5)">5</span>
+        </div>
+    </section>
+
+    <!-- Materials Section -->
+    <section class="materials-section" id="materials">
+        <h2 class="section-title scroll-animate">Chất Liệu <span>Đẳng Cấp</span></h2>
+        <p class="subtitle scroll-animate">Sự kết hợp hoàn hảo giữa công nghệ và tự nhiên</p>
+
+        <div class="materials-grid">
+            <div class="material-card scroll-animate">
+                <span class="material-icon">☁️</span>
+                <h3>Memory Foam 100%</h3>
+                <p>Lõi gối Memory Foam cao cấp với độ đàn hồi chậm, ôm sát đường cong cổ vai gáy, giúp giảm áp lực tối
+                    đa.</p>
+            </div>
+
+            <div class="material-card scroll-animate">
+                <span class="material-icon">🌿</span>
+                <h3>Vải Tencel Cao Cấp</h3>
+                <p>Vỏ gối làm từ sợi Tencel tự nhiên, mềm mại như lụa, thoáng khí gấp 3 lần cotton và kháng khuẩn vượt
+                    trội.</p>
+            </div>
+
+            <div class="material-card scroll-animate">
+                <span class="material-icon">❄️</span>
+                <h3>Công Nghệ Gel Cool</h3>
+                <p>Lớp Gel làm mát tích hợp giúp điều hòa nhiệt độ, mang lại cảm giác mát mẻ dễ chịu suốt đêm dài.</p>
+            </div>
+        </div>
+
+        <!-- Schematic Diagram -->
+        <div class="schematic-container scroll-animate"
+            style="max-width: 800px; margin: 60px auto 0; padding: 20px; border-radius: 20px; background: rgba(255,255,255,0.05); text-align: center;">
+            <h3 style="margin-bottom: 20px; font-size: 1.5rem; color: var(--text);">Cấu Tạo Chi Tiết</h3>
+            <img src="images/pillow_schematic.png" alt="Cấu tạo chi tiết gối DreamPillow"
+                style="width: 100%; border-radius: 10px; opacity: 0.9; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
         </div>
     </section>
 
@@ -2077,7 +2186,7 @@
                         const pulse = (Math.sin(effectTime * 5) + 1) * 0.5;
                         pillow.traverse((node) => { if (node.isMesh && node.material && node.material.emissive) { node.material.emissive.setHex(0xffd700); node.material.emissiveIntensity = pulse * 0.4; } });
                     } else if (activeEffect === 'massage') {
-                        pillowGroup.position.y += Math.sin(effectTime * 3) * 0.01;
+                        // Vertical knead removed
                     }
                 } else {
                     // Journey Logic
@@ -2091,7 +2200,7 @@
                         pillow.traverse((node) => { if (node.isMesh && node.material && node.material.emissive) { node.material.emissive.lerp(new THREE.Color(0x112255), 0.1); node.material.emissiveIntensity = 0.3; } });
                     } else if (currentStage === 3) { // Solution
                         pillowGroup.rotation.z = Math.sin(journeyTime * 1.5) * 0.03;
-                        pillowGroup.position.y += Math.sin(journeyTime * 3) * 0.01;
+                        // Removed vertical
                         pillow.traverse((node) => { if (node.isMesh && node.material && node.material.emissive) { node.material.emissive.lerp(new THREE.Color(0xffaa00), 0.1); node.material.emissiveIntensity = 0.3 + Math.sin(journeyTime * 3) * 0.1; } });
                     } else if (currentStage === 4) { // Relax
                         const targetScale = 1 + Math.sin(journeyTime * 2) * 0.02;
