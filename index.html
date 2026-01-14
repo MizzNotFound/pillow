@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DreamPillow - Gối Thông Minh</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Dancing+Script:wght@700&display=swap"
         rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
@@ -27,8 +28,28 @@
             box-sizing: border-box;
         }
 
+        h1,
+        h2,
+        h3,
+        .logo,
+        .section-title {
+            font-family: 'Dancing Script', cursive;
+            font-weight: 700;
+        }
+
+        /* Specific overrides if needed to keep some subtitles normal */
+        .subtitle,
+        p,
+        a,
+        button,
+        .intro-text,
+        .guide-step p {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.1rem;
+        }
+
         body {
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Crimson Text', serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             overflow-x: hidden;
@@ -1151,6 +1172,24 @@
             .features-grid {
                 grid-template-columns: 1fr;
             }
+
+            /* Mobile 3D Section Fix */
+            .pillow-3d-container {
+                height: 350px;
+                /* Ensure height on mobile */
+                width: 100%;
+            }
+
+            #pillow-canvas {
+                width: 100% !important;
+                height: 100% !important;
+            }
+
+            .control-panel {
+                bottom: 10px;
+                padding: 10px;
+                width: 95%;
+            }
         }
 
         /* Materials Section */
@@ -1225,6 +1264,83 @@
             font-size: 1rem;
             line-height: 1.6;
         }
+
+        /* Product Intro Section */
+        .intro-section {
+            padding: 100px 5%;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .intro-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .intro-highlight {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* User Guide Section */
+        .guide-section {
+            padding: 80px 5%;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 50px;
+        }
+
+        .guide-steps {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+
+        .guide-step {
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(196, 167, 125, 0.4));
+            transition: transform 0.3s ease;
+        }
+
+        .guide-step:hover .step-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 20px rgba(196, 167, 125, 0.8));
+        }
+
+        .guide-step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .guide-step p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .guide-steps {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
     </style>
 </head>
 
@@ -1236,9 +1352,10 @@
     <header>
         <div class="logo">Dream<span>Pillow</span></div>
         <nav>
+            <a href="#intro">Giới Thiệu</a>
             <a href="#pillow">Xem 3D</a>
             <a href="#features">Tính năng</a>
-            <a href="#benefits">Lợi ích</a>
+            <a href="#guide">Hướng Dẫn</a>
         </nav>
     </header>
 
@@ -1251,6 +1368,20 @@
                 năng lượng.</p>
             <a href="#pillow" class="cta-button scroll-animate visible">Khám Phá 3D</a>
         </div>
+    </section>
+
+    <!-- Product Introduction Section -->
+    <section class="intro-section" id="intro">
+        <h2 class="section-title scroll-animate">Về <span>DreamPillow</span></h2>
+        <p class="intro-text scroll-animate">
+            <span class="intro-highlight">DreamPillow</span> là chiếc gối thông minh đầu tiên tại Việt Nam tích hợp
+            trí tuệ nhân tạo để chăm sóc giấc ngủ của bạn. Được nghiên cứu và phát triển bởi các chuyên gia hàng đầu,
+            chúng tôi mang đến một giải pháp toàn diện giúp bạn giải tỏa căng thẳng sau ngày làm việc mệt mỏi.
+        </p>
+        <p class="intro-text scroll-animate">
+            Không chỉ là một chiếc gối, DreamPillow là người bạn đồng hành, hiểu rõ chu kỳ giấc ngủ của bạn và
+            tự động điều chỉnh nhiệt độ, âm thanh và chế độ massage để mang lại trải nghiệm nghỉ ngơi tuyệt vời nhất.
+        </p>
     </section>
 
     <!-- 3D Pillow Section -->
@@ -1329,7 +1460,7 @@
                     </div>
                 </div>
                 <div class="carousel-slide-lg" data-step="3">
-                    <img src="images/pillow_schematic.png" alt="Pillow Tech">
+                    <img src="images/pillow_schematic_vn.png" alt="Pillow Tech">
                     <div class="slide-info">
                         <h3>💆 Sử Dụng DreamPillow</h3>
                         <p>Công nghệ massage đa điểm và nhiệt hồng ngoại giúp thư giãn cơ bắp.</p>
@@ -1464,6 +1595,39 @@
             src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"
             type="audio/mpeg">
     </audio>
+
+    <!-- User Guide Section -->
+    <section class="guide-section" id="guide">
+        <h2 class="section-title scroll-animate">Hướng Dẫn <span>Sử Dụng</span></h2>
+        <p class="subtitle scroll-animate">Chỉ với 3 bước đơn giản để bắt đầu hành trình giấc ngủ hoàn hảo</p>
+
+        <div class="guide-steps">
+            <div class="guide-step scroll-animate">
+                <img src="images/guide_connect.png" class="step-icon" alt="Step 1">
+                <h3>Kết Nối Ứng Dụng</h3>
+                <p>Tải ứng dụng DreamPillow trên App Store hoặc Google Play. Bật Bluetooth và kết nối với gối trong 3s.
+                </p>
+            </div>
+
+            <div class="guide-step scroll-animate">
+                <img src="images/guide_settings.png" class="step-icon" alt="Step 2">
+                <h3>Cài Đặt Cá Nhân</h3>
+                <p>Chọn chế độ yêu thích của bạn: Nhiệt độ, Rung massage, Âm thanh và Mùi hương. Tùy chỉnh hẹn giờ.
+                </p>
+            </div>
+
+            <div class="guide-step scroll-animate">
+                <img src="images/guide_enjoy.png" class="step-icon" alt="Step 3">
+                <h3>Tận Hưởng</h3>
+                <p>Đặt lưng xuống, thả lỏng cơ thể và để DreamPillow đưa bạn vào giấc ngủ sâu thư thái nhất.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 50px 0; color: #888; font-size: 0.9rem;">
+        <p>&copy; 2024 DreamPillow India. All rights reserved.</p>
+    </footer>
 
     <script>
 
@@ -2134,21 +2298,21 @@
 
                 // X-RAY EFFECT: Create schematic plane inside pillow
                 const textureLoader = new THREE.TextureLoader();
-                textureLoader.load('images/pillow_schematic_vn.png?v=1', (texture) => {
-                    const planeGeo = new THREE.PlaneGeometry(2, 1.5); // Adjust size
+                textureLoader.load('images/pillow_schematic_vn.png?v=3', (texture) => {
+                    const planeGeo = new THREE.PlaneGeometry(1.5, 1.2); // Smaller card size
                     const planeMat = new THREE.MeshBasicMaterial({
                         map: texture,
-                        transparent: true,
-                        opacity: 0, // Start invisible
+                        transparent: true, // Use transparent for normal blending
+                        opacity: 0,
                         side: THREE.DoubleSide,
-                        blending: THREE.AdditiveBlending, // Black disappears, white lines show
+                        blending: THREE.NormalBlending, // Normal blending for white paper look
                         depthWrite: false
                     });
                     schematicPlane = new THREE.Mesh(planeGeo, planeMat);
-                    schematicPlane.position.set(0, 0, 0); // Center inside pillow
-                    schematicPlane.rotation.x = THREE.MathUtils.degToRad(-10); // 350 degrees (tilted slightly)
+                    schematicPlane.position.set(0, 0, 0);
+                    schematicPlane.rotation.x = THREE.MathUtils.degToRad(-10);
                     pillowGroup.add(schematicPlane);
-                    console.log("Schematic plane loaded");
+                    console.log("Schematic plane loaded (White Paper Mode)");
                 });
 
                 // Set pillow material to be transparent-capable
@@ -2234,7 +2398,10 @@
                         const pulse = (Math.sin(effectTime * 5) + 1) * 0.5;
                         pillow.traverse((node) => { if (node.isMesh && node.material && node.material.emissive) { node.material.emissive.setHex(0xffd700); node.material.emissiveIntensity = pulse * 0.4; } });
                     } else if (activeEffect === 'massage') {
-                        // Vertical knead removed
+                        // Kneading effect: scaling + slight rotation twist
+                        const knead = Math.sin(effectTime * 4) * 0.02;
+                        pillowGroup.scale.set(1 + knead, 1 - knead, 1 + knead);
+                        pillowGroup.rotation.z = Math.sin(effectTime * 8) * 0.01;
                     }
                 } else {
                     // Journey Logic
