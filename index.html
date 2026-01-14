@@ -858,6 +858,35 @@
             min-width: 50px;
         }
 
+        /* Custom Icons */
+        .custom-icon {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
+            margin-bottom: 4px;
+        }
+
+        .custom-icon-sm {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 5px;
+            object-fit: contain;
+        }
+
+        .custom-icon-feature {
+            width: 56px;
+            height: 56px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.3));
+        }
+
+        .feature-btn img {
+            pointer-events: none;
+        }
+
         /* Journey Carousel Styles */
         .journey-carousel {
             position: absolute;
@@ -1450,19 +1479,19 @@
             <!-- Features -->
             <div class="control-btn-group">
                 <button class="feature-btn music-btn" id="btn-music" onclick="activateFeature('music')">
-                    <span class="feature-icon-lg">🎵</span>
+                    <img src="images/icon_tech_music.png" alt="Music" class="custom-icon">
                     <span>Music</span>
                 </button>
                 <button class="feature-btn alarm-btn" id="btn-alarm" onclick="activateFeature('alarm')">
-                    <span class="feature-icon-lg">⏰</span>
+                    <img src="images/icon_tech_alarm.png" alt="Alarm" class="custom-icon">
                     <span>Alarm</span>
                 </button>
                 <button class="feature-btn massage-btn" id="btn-massage" onclick="activateFeature('massage')">
-                    <span class="feature-icon-lg">💆</span>
+                    <img src="images/icon_tech_massage.png" alt="Massage" class="custom-icon">
                     <span>Massage</span>
                 </button>
                 <button class="feature-btn scent-btn" id="btn-scent" onclick="activateFeature('scent')">
-                    <span class="feature-icon-lg">🌸</span>
+                    <img src="images/icon_tech_scent.png" alt="Scent" class="custom-icon">
                     <span>Scent</span>
                 </button>
             </div>
@@ -1480,7 +1509,7 @@
 
             <!-- Temperature Control -->
             <div class="temp-control">
-                <label for="temp-slider">🌡️ Nhiệt</label>
+                <label for="temp-slider"><img src="images/icon_tech_temp.png" class="custom-icon-sm"> Nhiệt</label>
                 <input type="range" id="temp-slider" min="30" max="50" value="30" oninput="setTemperature(this.value)">
                 <span id="temp-value">30°C</span>
             </div>
@@ -1580,18 +1609,18 @@
         <h2 class="section-title scroll-animate">Công Nghệ <span>Tiên Tiến</span></h2>
         <div class="features-grid">
             <div class="feature-card scroll-animate">
-                <span class="feature-icon">🔔</span>
+                <img src="images/icon_tech_alarm.png" alt="Alarm" class="custom-icon-feature">
                 <h3>Báo Thức Nhẹ Nhàng</h3>
                 <p>Hệ thống rung nhẹ và ánh sáng dần tăng, đánh thức bạn một cách tự nhiên mà không gây sốc hay khó
                     chịu.</p>
             </div>
             <div class="feature-card scroll-animate">
-                <span class="feature-icon">💆</span>
+                <img src="images/icon_tech_massage.png" alt="Massage" class="custom-icon-feature">
                 <h3>Massage Thư Giãn</h3>
                 <p>Tích hợp công nghệ massage đa điểm, giảm căng thẳng vùng cổ và vai, giúp thư giãn toàn bộ cơ thể.</p>
             </div>
             <div class="feature-card scroll-animate">
-                <span class="feature-icon">🎵</span>
+                <img src="images/icon_tech_music.png" alt="Music" class="custom-icon-feature">
                 <h3>Nhạc Lofi Du Dương</h3>
                 <p>Loa tích hợp phát nhạc lofi nhẹ nhàng với âm thanh trong trẻo, đưa bạn vào giấc ngủ sâu và bình yên.
                 </p>
@@ -1606,13 +1635,13 @@
                 </div>
             </div>
             <div class="feature-card scroll-animate">
-                <span class="feature-icon">🌸</span>
+                <img src="images/icon_tech_scent.png" alt="Scent" class="custom-icon-feature">
                 <h3>Hương Thơm Dễ Chịu</h3>
                 <p>Hệ thống khuếch tán tinh dầu tự nhiên với các mùi hương như lavender, bạc hà giúp thư giãn tinh thần.
                 </p>
             </div>
             <div class="feature-card scroll-animate">
-                <span class="feature-icon">🌡️</span>
+                <img src="images/icon_tech_temp.png" alt="Temperature" class="custom-icon-feature">
                 <h3>Điều Chỉnh Nhiệt Độ</h3>
                 <p>Hệ thống nhiệt hồng ngoại có thể điều chỉnh từ 30°C đến 50°C, giúp làm ấm cổ và vai, thư giãn cơ bắp.
                 </p>
@@ -2349,7 +2378,7 @@
 
                 // X-RAY EFFECT: Create schematic plane inside pillow
                 const textureLoader = new THREE.TextureLoader();
-                textureLoader.load('images/pillow_schematic_vn.png?v=9', (texture) => {
+                textureLoader.load('images/pillow_schematic_vn.png?v=10', (texture) => {
                     const planeGeo = new THREE.PlaneGeometry(1.5, 1.2); // Smaller card size
                     const planeMat = new THREE.MeshBasicMaterial({
                         map: texture,
