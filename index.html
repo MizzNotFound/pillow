@@ -1202,12 +1202,44 @@
 
             .control-panel {
                 position: relative;
-                /* Ensure it stacks below */
                 width: 95%;
                 margin: 10px auto;
                 bottom: auto;
-                /* Remove any absolute positioning artifacts */
                 flex-shrink: 0;
+                padding: 10px 15px;
+                gap: 15px;
+            }
+
+            .control-btn-group {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .feature-btn {
+                width: 70px;
+                height: 75px;
+                padding: 8px;
+            }
+
+            .feature-btn span:last-child {
+                font-size: 0.7rem;
+            }
+
+            .control-btn-sm {
+                width: 38px;
+                height: 38px;
+                font-size: 1rem;
+            }
+
+            .temp-control {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .temp-control input[type="range"] {
+                width: 80px;
             }
         }
 
