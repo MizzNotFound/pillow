@@ -2207,8 +2207,11 @@
 
             const loader = new THREE.GLTFLoader();
             // Custom Texture (Lavender Pattern)
-            const customTexture = new THREE.TextureLoader().load('images/pillow_texture_lavender.jpg?v=1');
-            customTexture.flipY = false; // GLTF convention
+            const customTexture = new THREE.TextureLoader().load('images/pillow_texture_lavender.jpg?v=2');
+            customTexture.flipY = false;
+            customTexture.wrapS = THREE.RepeatWrapping;
+            customTexture.wrapT = THREE.RepeatWrapping;
+            customTexture.repeat.set(2, 2); // Tile the texture for better resolution
 
             loader.load('pillow.glb', (gltf) => {
                 pillow = gltf.scene;
