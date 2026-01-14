@@ -2206,6 +2206,10 @@
             scene.add(pillowGroup);
 
             const loader = new THREE.GLTFLoader();
+            // Custom Texture (Lavender Pattern)
+            const customTexture = new THREE.TextureLoader().load('images/pillow_texture_lavender.jpg?v=1');
+            customTexture.flipY = false; // GLTF convention
+
             loader.load('pillow.glb', (gltf) => {
                 pillow = gltf.scene;
                 // Scale/Center Logic
@@ -2223,7 +2227,13 @@
                     if (node.isMesh) {
                         node.castShadow = true;
                         node.receiveShadow = true;
-                        if (node.material && node.material.map) node.material.emissiveMap = node.material.map;
+
+                        // Apply Custom Texture
+                        node.material.map = customTexture;
+                        // Maintain subtle emission style if used
+                        node.material.emissive = new THREE.Color(0x222222);
+                        node.material.emissiveMap = customTexture;
+                        node.material.needsUpdate = true;
                     }
                 });
                 pillowGroup.add(pillow);
