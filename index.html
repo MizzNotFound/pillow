@@ -597,6 +597,14 @@
                 padding: 15px 20px;
                 flex-direction: column;
                 gap: 15px;
+                background: var(--bg-primary);
+                /* Solid background to prevent overlap */
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            }
+
+            /* Fix anchor scrolling position */
+            section {
+                scroll-margin-top: 120px;
             }
 
             nav a {
@@ -638,7 +646,8 @@
 
         /* Control Panel Styles */
         .control-panel {
-            background: rgba(58, 47, 36, 0.85);
+            background: rgba(58, 47, 36, 0.95);
+            /* Higher opacity */
             backdrop-filter: blur(12px);
             border: 1px solid rgba(196, 167, 125, 0.3);
             border-radius: 20px;
