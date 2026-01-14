@@ -1390,13 +1390,7 @@
             </div>
         </div>
 
-        <!-- Schematic Diagram -->
-        <div class="schematic-container scroll-animate"
-            style="max-width: 800px; margin: 60px auto 0; padding: 20px; border-radius: 20px; background: rgba(255,255,255,0.05); text-align: center;">
-            <h3 style="margin-bottom: 20px; font-size: 1.5rem; color: var(--text);">Cấu Tạo Chi Tiết</h3>
-            <img src="images/pillow_schematic.png" alt="Cấu tạo chi tiết gối DreamPillow"
-                style="width: 100%; border-radius: 10px; opacity: 0.9; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
-        </div>
+
     </section>
 
     <!-- Features Section -->
@@ -1490,6 +1484,9 @@
         let activeEffect = null; // 'music', 'alarm', 'massage', 'scent'
         let effectTime = 0;
         let scentParticles = [];
+        // X-Ray Effect
+        let schematicPlane = null;
+        let currentZoom = 1; // 1 = normal, <1 = zoomed in
 
 
 
@@ -2135,10 +2132,45 @@
                 });
                 pillowGroup.add(pillow);
 
+                // X-RAY EFFECT: Create schematic plane inside pillow
+                const textureLoader = new THREE.TextureLoader();
+                textureLoader.load('images/pillow_schematic_vn.png?v=1', (texture) => {
+                    const planeGeo = new THREE.PlaneGeometry(2, 1.5); // Adjust size
+                    const planeMat = new THREE.MeshBasicMaterial({
+                        map: texture,
+                        transparent: true,
+                        opacity: 0, // Start invisible
+                        side: THREE.DoubleSide,
+                        blending: THREE.AdditiveBlending, // Black disappears, white lines show
+                        depthWrite: false
+                    });
+                    schematicPlane = new THREE.Mesh(planeGeo, planeMat);
+                    schematicPlane.position.set(0, 0, 0); // Center inside pillow
+                    schematicPlane.rotation.x = THREE.MathUtils.degToRad(-10); // 350 degrees (tilted slightly)
+                    pillowGroup.add(schematicPlane);
+                    console.log("Schematic plane loaded");
+                });
+
+                // Set pillow material to be transparent-capable
+                pillow.traverse((node) => {
+                    if (node.isMesh && node.material) {
+                        node.material.transparent = true;
+                    }
+                });
+
                 // FIX 3: Start Idle (Stage 0)
                 setJourneyStep(0);
                 console.log("Model Loaded & Fixes Applied");
             }, undefined, function (error) { console.error("Error loading model", error); });
+
+            // X-RAY ZOOM: Wheel Event
+            canvas.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? 0.1 : -0.1;
+                currentZoom = Math.max(0.3, Math.min(1.5, currentZoom + delta)); // Clamp zoom
+                camera.position.z = 3.5 * currentZoom;
+                camera.position.y = 2.5 * currentZoom;
+            }, { passive: false });
 
             // Listeners
             window.addEventListener('resize', onWindowResize);
@@ -2172,6 +2204,22 @@
             if (isAutoRotate) targetRotation.y += 0.003;
             pillowGroup.rotation.y += (targetRotation.y - pillowGroup.rotation.y) * 0.1;
             pillowGroup.rotation.x += (targetRotation.x - pillowGroup.rotation.x) * 0.1;
+
+            // X-RAY EFFECT: Transparency based on zoom
+            if (pillow && schematicPlane) {
+                // Calculate transparency: when zoomed in (currentZoom < 0.6), show schematic
+                const xrayIntensity = Math.max(0, Math.min(1, (0.7 - currentZoom) / 0.4)); // 0-1 range
+
+                // Fade out pillow material
+                pillow.traverse((node) => {
+                    if (node.isMesh && node.material) {
+                        node.material.opacity = 1 - xrayIntensity * 0.7; // Min 0.3 opacity
+                    }
+                });
+
+                // Fade in schematic plane
+                schematicPlane.material.opacity = xrayIntensity;
+            }
 
             // Base Float REMOVED for Idle Stability
 
