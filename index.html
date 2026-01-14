@@ -2094,13 +2094,58 @@
         function stopAuto() { isAutoRotate = false; const btn = document.getElementById('auto-rotate'); if (btn) btn.classList.remove('active'); }
 
         // Activate Feature
+        // ALARM SOUND GENERATOR (Web Audio API)
+        let alarmCtx, alarmOsc, alarmGain;
+        function playGentleAlarm() {
+            if (alarmCtx) return;
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+
+            alarmCtx = new AudioContext();
+            alarmOsc = alarmCtx.createOscillator();
+            alarmGain = alarmCtx.createGain();
+
+            alarmOsc.connect(alarmGain);
+            alarmGain.connect(alarmCtx.destination);
+
+            // Gentle Sine Wave
+            alarmOsc.type = 'sine';
+            alarmOsc.frequency.setValueAtTime(440, alarmCtx.currentTime); // A4
+
+            // Create a gentle double-beep pulse pattern
+            const now = alarmCtx.currentTime;
+            alarmGain.gain.setValueAtTime(0, now);
+
+            // Loop for 60 seconds (simple automation)
+            for (let i = 0; i < 30; i++) {
+                const t = now + i * 2;
+                // Beep 1
+                alarmGain.gain.linearRampToValueAtTime(0.2, t + 0.1);
+                alarmGain.gain.linearRampToValueAtTime(0, t + 0.4);
+                // Beep 2
+                alarmGain.gain.linearRampToValueAtTime(0.2, t + 0.5);
+                alarmGain.gain.linearRampToValueAtTime(0, t + 0.9);
+            }
+
+            alarmOsc.start();
+        }
+
+        function stopAlarm() {
+            if (alarmOsc) { try { alarmOsc.stop(); } catch (e) { } alarmOsc = null; }
+            if (alarmCtx) { if (alarmCtx.state !== 'closed') alarmCtx.close(); alarmCtx = null; }
+        }
+
+        // Activate Feature
         window.activateFeature = function (type) {
+            // STOP EVERYTHING FIRST
+            const audio = document.getElementById('lofi-audio');
+            if (audio) { audio.pause(); audio.currentTime = 0; }
+            stopAlarm();
+
             if (activeEffect === type) {
                 activeEffect = null;
                 document.querySelectorAll('.feature-btn').forEach(b => b.classList.remove('active'));
                 showOverlay("");
-                const audio = document.getElementById('lofi-audio');
-                if (audio) { audio.pause(); audio.currentTime = 0; }
             } else {
                 activeEffect = type;
                 effectTime = 0;
@@ -2108,12 +2153,11 @@
                 const btn = document.querySelector('.' + type + '-btn');
                 if (btn) btn.classList.add('active');
 
-                // Audio
-                const audio = document.getElementById('lofi-audio');
+                // Audio Logic
                 if (type === 'music') {
                     if (audio) { audio.volume = 0.5; audio.play().catch(e => console.log("Audio Error", e)); }
-                } else {
-                    if (audio) { audio.pause(); audio.currentTime = 0; }
+                } else if (type === 'alarm') {
+                    playGentleAlarm();
                 }
 
                 // Overlay
