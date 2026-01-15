@@ -2476,8 +2476,8 @@
                         depthWrite: false
                     });
                     schematicPlane = new THREE.Mesh(planeGeo, planeMat);
-                    schematicPlane.position.set(0, 0, 0);
-                    schematicPlane.rotation.x = THREE.MathUtils.degToRad(-10);
+                    schematicPlane.position.set(0, 0.3, 0); // Slightly above center
+                    schematicPlane.rotation.x = THREE.MathUtils.degToRad(-60); // Face camera (angled upward)
                     pillowGroup.add(schematicPlane);
                     console.log("Schematic plane loaded (White Paper Mode)");
                 });
